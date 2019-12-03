@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package main is a Kubernetes API proxy. It exposes a smaller surface of the
-// API and limits operations to specifically selected labels, and deployments
-
+// Package main is a sample application that show cli that spits out
+// a random color.
 package main
 
 import (
