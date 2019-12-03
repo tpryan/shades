@@ -29,7 +29,7 @@ import (
 
 // ErrNotValidFamily indicates that you tried to request a color family that
 // does not exist
-var ErrNotValidFamily = fmt.Errorf("the input color family  is not valid")
+var ErrNotValidFamily = fmt.Errorf("the input color family is not valid")
 
 var list = map[string]Family{
 	"RED":     {"Red", "FF0000", Range{-10, 20}, Range{.2, 1}, Range{.2, 1}},
