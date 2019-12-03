@@ -43,28 +43,43 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		display: inline-block; 
 		height: 75px; width: 75px;
 	}
+
+	.content {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.container {
+		width: 30%;
+		padding: 5px 10px;	
+	}
 </style>
 <body>
+<div class="content">
 `
 
 	footer := `
+</div>	
 </body>
 </html>`
 
 	list := shades.List()
-	fmt.Fprintf(w, header)
+	fmt.Fprintln(w, header)
 	for _, k := range list {
 		shade, err := shades.NewFamily(k)
 		if err != nil {
 			log.Printf("could not get color family: %v", err)
 			continue
 		}
+		fmt.Fprintln(w, "\t<div class=\"container\">")
 		fmt.Fprintf(w, "\t<h1>%s</h1>\n", shade.Name)
 		for i := 0; i < count; i++ {
 			color := shade.Random(time.Now().UnixNano())
 			inverse := shades.Invert(color)
 			fmt.Fprintf(w, "\t<div class=\"square\" style=\"background-color: %s; color: %s;\" >%s</div>\n", color, inverse, color)
 		}
+		fmt.Fprintf(w, "\t</div>\n")
 	}
 	fmt.Fprintf(w, footer)
 
