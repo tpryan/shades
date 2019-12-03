@@ -105,7 +105,7 @@ func TestRandom(t *testing.T) {
 
 	for _, c := range cases {
 		rand.Seed(c.seed)
-		got := c.in.Random(c.seed)
+		got := c.in.Random()
 		if got != c.want {
 			t.Errorf("%s.Random(%d) got %s, want %s", c.in.Name, c.seed, got, c.want)
 		}

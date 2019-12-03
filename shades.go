@@ -104,7 +104,7 @@ func (f *Family) In(hex string) bool {
 
 // Random returns a hexidecimal color representation of a color within the
 // shade range of the base color.
-func (f *Family) Random(seed int64) string {
+func (f *Family) Random() string {
 	return colorful.Hsl(rando(f.Hue), rando(f.Sat), rando(f.Lum)).Hex()
 }
 
