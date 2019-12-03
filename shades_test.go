@@ -14,6 +14,7 @@
 package shades
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -30,7 +31,8 @@ func TestRandomInRange(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		got := rando(c.in, c.seed)
+		rand.Seed(c.seed)
+		got := rando(c.in)
 		if got != c.want {
 			t.Errorf("randomInRange(%v) got %f, want %f", c.in, got, c.want)
 		}
@@ -95,15 +97,16 @@ func TestRandom(t *testing.T) {
 		want string
 	}{
 
-		{red, 1, "#e58677"},
-		{red, 2, "#72393d"},
-		{green, 1, "#55e74c"},
-		{green, 2, "#609331"},
-		{blue, 1, "#7a87e2"},
-		{blue, 2, "#404b6a"},
+		{red, 1, "#fc8b79"},
+		{red, 2, "#572428"},
+		{green, 1, "#51fc47"},
+		{green, 2, "#528225"},
+		{blue, 1, "#7a8afb"},
+		{blue, 2, "#293452"},
 	}
 
 	for _, c := range cases {
+		rand.Seed(c.seed)
 		got := c.in.Random(c.seed)
 		if got != c.want {
 			t.Errorf("%s.Random(%d) got %s, want %s", c.in.Name, c.seed, got, c.want)
