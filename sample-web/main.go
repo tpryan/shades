@@ -27,7 +27,9 @@ import (
 
 func main() {
 	http.HandleFunc("/", handle)
-	http.ListenAndServe(":8080", nil)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
