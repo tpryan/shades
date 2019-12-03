@@ -33,42 +33,6 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	count := 4
-
-	header := `<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-</head>
-<style>
-	.square{
-		display: inline-block;
-		height: 75px; width: 75px;
-	}
-
-	.content {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-	}
-
-	.container {
-		width: 30%;
-		padding: 5px 10px;
-	}
-</style>
-<body>
-<div class="content">
-`
-
-	footer := `
-</div>
-</body>
-</html>`
-
 	list := shades.List()
 	fmt.Fprintln(w, header)
 	for _, k := range list {
@@ -86,6 +50,41 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, "\t</div>\n")
 	}
-	fmt.Fprintf(w, footer)
-
+	fmt.Fprint(w, footer)
 }
+
+const count = 4
+
+const header = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<style>
+.square{
+	display: inline-block;
+	height: 75px; width: 75px;
+}
+
+.content {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.container {
+	width: 30%;
+	padding: 5px 10px;
+}
+</style>
+<body>
+<div class="content">
+`
+
+const footer = `
+</div>
+</body>
+</html>`
