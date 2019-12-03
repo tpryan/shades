@@ -1,9 +1,9 @@
 # Shades
-This is a minimal golang package and app for generating random colors. 
+This is a minimal golang package and app for generating random colors.
 
 ## Usage
 
-```` golang
+```go
 shade, err := shades.NewFamily("RED")
 if err != nil {
     log.Fatalf("could not get color family: %v", err)
@@ -11,10 +11,10 @@ if err != nil {
 color := shade.Random(1)
 
 fmt.Printf("color: %s\n", color) // #e58677
-````
+```
 
 
-If you run the sample web app you get a minimal random list of colors. 
+If you run the sample web app you get a minimal random list of colors.
 
 ![Colors Screenshot](sample.png "Screenshot")
 
