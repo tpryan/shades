@@ -14,6 +14,7 @@
 
 // Package main is a Kubernetes API proxy. It exposes a smaller surface of the
 // API and limits operations to specifically selected labels, and deployments
+
 package main
 
 import (
@@ -26,13 +27,14 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", handle)
+
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
+
 	list := shades.List()
 	fmt.Fprintln(w, header)
 	for _, k := range list {
@@ -50,6 +52,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, "\t</div>\n")
 	}
+
 	fmt.Fprint(w, footer)
 }
 
@@ -88,3 +91,4 @@ const footer = `
 </div>
 </body>
 </html>`
+

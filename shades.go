@@ -23,9 +23,16 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	colorful "github.com/lucasb-eyer/go-colorful"
 )
+
+var seed = time.Now().UnixNano()
+
+func init() {
+	rand.Seed(seed)
+}
 
 // ErrNotValidFamily indicates that you tried to request a color family that
 // does not exist
@@ -98,11 +105,10 @@ func (f *Family) In(hex string) bool {
 // Random returns a hexidecimal color representation of a color within the
 // shade range of the base color.
 func (f *Family) Random(seed int64) string {
-	return colorful.Hsl(rando(f.Hue, seed), rando(f.Sat, seed), rando(f.Lum, seed)).Hex()
+	return colorful.Hsl(rando(f.Hue), rando(f.Sat), rando(f.Lum)).Hex()
 }
 
-func rando(r Range, seed int64) float64 {
-	rand.Seed(seed)
+func rando(r Range) float64 {
 	return (rand.Float64() * (r.Top - r.Bottom)) + r.Bottom
 }
 
