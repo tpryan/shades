@@ -36,7 +36,6 @@ func TestRandomInRange(t *testing.T) {
 			t.Errorf("randomInRange(%v) got %f, want %f", c.in, got, c.want)
 		}
 	}
-
 }
 
 func TestBetween(t *testing.T) {
@@ -58,7 +57,6 @@ func TestBetween(t *testing.T) {
 			t.Errorf("Between(%f) got %t, want %t", c.in, got, c.want)
 		}
 	}
-
 }
 
 func TestNewFamily(t *testing.T) {
@@ -85,7 +83,6 @@ func TestNewFamily(t *testing.T) {
 }
 
 func TestRandom(t *testing.T) {
-
 	blue := Family{"Blue", "0000FF", Range{221, 240}, Range{.1, 1}, Range{.2, 1}}
 	red := Family{"Red", "FF0000", Range{-10, 20}, Range{.2, 1}, Range{.2, 1}}
 	green := Family{"Green", "00FF00", Range{81, 140}, Range{.4, 1}, Range{.3, .8}}
@@ -109,9 +106,7 @@ func TestRandom(t *testing.T) {
 		if got != c.want {
 			t.Errorf("%s.Random(%d) got %s, want %s", c.in.Name, c.seed, got, c.want)
 		}
-
 	}
-
 }
 
 func TestFamilyIn(t *testing.T) {
@@ -136,9 +131,7 @@ func TestFamilyIn(t *testing.T) {
 		if got != c.want {
 			t.Errorf("%s.In(%s) got %t, want %t", c.family.Name, c.in, got, c.want)
 		}
-
 	}
-
 }
 
 func TestFindFamily(t *testing.T) {
@@ -166,9 +159,7 @@ func TestFindFamily(t *testing.T) {
 		if got != c.want {
 			t.Errorf("FindFamily(%s) got %s, want %s", c.in, got, c.want)
 		}
-
 	}
-
 }
 
 func TestInvert(t *testing.T) {
@@ -189,9 +180,7 @@ func TestInvert(t *testing.T) {
 		if got != c.want {
 			t.Errorf("Invert(%s) got %s, want %s", c.in, got, c.want)
 		}
-
 	}
-
 }
 
 func TestList(t *testing.T) {
@@ -200,5 +189,4 @@ func TestList(t *testing.T) {
 	if len(list) != len(l) {
 		t.Errorf("len(List()) got %d, want %d", len(l), len(list))
 	}
-
 }

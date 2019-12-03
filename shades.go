@@ -52,7 +52,6 @@ type Range struct {
 
 // Between determines if a given number is contained in a range.
 func (r *Range) Between(value float64) bool {
-
 	if r.Bottom < 0 {
 		diff := 360 + r.Bottom
 
@@ -79,7 +78,8 @@ type Family struct {
 	Lum  Range
 }
 
-// In determines if a given hexidecimal color is withing a given color family
+// In determines if a given hexidecimal color is withing a given color family.
+// If the given hex string is invalid, this function returns false.
 func (f *Family) In(hex string) bool {
 	color, err := colorful.Hex(hex)
 	if err != nil {
@@ -142,7 +142,6 @@ func FindFamily(hex string) string {
 
 // Invert returns the color on the opposite side of the hue chart
 func Invert(hex string) string {
-
 	hex = strings.ToUpper(hex)
 	splitnum := strings.Split(hex, "")
 	resultnum := "#"
