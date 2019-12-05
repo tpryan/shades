@@ -196,7 +196,7 @@ func TestList(t *testing.T) {
 	}
 }
 
-func ExampleShades_output() {
+func ExampleRandom_output() {
 	rand.Seed(1)
 	shade, err := NewFamily("RED")
 	if err != nil {
