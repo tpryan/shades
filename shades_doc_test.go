@@ -20,7 +20,7 @@ import (
 	"math/rand"
 )
 
-func ExampleFamily_Random_output() {
+func Example_output() {
 	rand.Seed(1)
 	shade, err := NewFamily("RED")
 	if err != nil {
