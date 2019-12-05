@@ -196,7 +196,7 @@ func TestList(t *testing.T) {
 	}
 }
 
-func ExampleExamples_output() {
+func ExampleShades_output() {
 	shade, err := NewFamily("RED")
 	if err != nil {
 		log.Fatalf("could not get color family: %v", err)
