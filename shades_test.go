@@ -15,6 +15,8 @@
 package shades
 
 import (
+	"fmt"
+	"log"
 	"math/rand"
 	"testing"
 )
@@ -192,4 +194,15 @@ func TestList(t *testing.T) {
 	if len(list) != len(l) {
 		t.Errorf("len(List()) got %d, want %d", len(l), len(list))
 	}
+}
+
+func ExampleExamples_output() {
+	shade, err := NewFamily("RED")
+	if err != nil {
+		log.Fatalf("could not get color family: %v", err)
+	}
+	color := shade.Random()
+
+	fmt.Printf("color: %s\n", color)
+	// Output: #fc8b79
 }
