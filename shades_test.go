@@ -197,12 +197,13 @@ func TestList(t *testing.T) {
 }
 
 func ExampleShades_output() {
+	rand.Seed(1)
 	shade, err := NewFamily("RED")
 	if err != nil {
 		log.Fatalf("could not get color family: %v", err)
 	}
 	color := shade.Random()
 
-	fmt.Printf("color: %s\n", color)
-	// Output: #fc8b79
+	fmt.Println(color)
+	// Output:#fc8b79
 }
