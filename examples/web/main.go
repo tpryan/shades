@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	shades "github.com/tpryan/shades"
 )
 
 func main() {
+	http.HandleFunc("/", handle)
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
@@ -34,9 +34,8 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-
 	list := shades.List()
-	fmt.Fprintln(w, header)
+	fmt.Fprint(w, header)
 	for _, k := range list {
 		shade, err := shades.NewFamily(k)
 		if err != nil {
@@ -46,7 +45,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "\t<div class=\"container\">")
 		fmt.Fprintf(w, "\t<h1>%s</h1>\n", shade.Name)
 		for i := 0; i < count; i++ {
-			color := shade.Random(time.Now().UnixNano())
+			color := shade.Random()
 			inverse := shades.Invert(color)
 			fmt.Fprintf(w, "\t<div class=\"square\" style=\"background-color: %s; color: %s;\" >%s</div>\n", color, inverse, color)
 		}
