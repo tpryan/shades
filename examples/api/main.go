@@ -5,14 +5,25 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gorilla/mux"
 	"github.com/tpryan/shades"
 )
 
+var (
+	errorNoGrayscale = fmt.Errorf("cannot handle grayscale colors")
+	errorNoColor     = fmt.Errorf("color cannot be blank")
+	errorInValid     = fmt.Errorf("a valid color (#xxxxxx format) must be input to find the family for it")
+)
+
 func main() {
-	port := "8080"
+	port := os.Getenv("PORT")
+	if port != "" {
+		port = "8080"
+	}
+
 	srv := &server{
 		router: mux.NewRouter().StrictSlash(true),
 	}
@@ -34,6 +45,8 @@ func (s server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (s *server) routes() {
 	s.router.HandleFunc("/random/{color}", s.handleRandom())
 	s.router.HandleFunc("/random", s.handleRandom())
+	s.router.HandleFunc("/invert", s.handleInvert()).Methods(http.MethodPost)
+	s.router.HandleFunc("/family/find", s.handleFamilyFind()).Methods(http.MethodPost)
 	s.router.HandleFunc("/family", s.handleFamilyList())
 	s.router.HandleFunc("/healthz", s.handleHealthz())
 	s.router.HandleFunc("/", s.handleHealthz())
@@ -76,6 +89,51 @@ func (s *server) handleRandom() http.HandlerFunc {
 			return
 		}
 		result := shade.Random()
+
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, result)
+	}
+}
+
+func (s *server) handleFamilyFind() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		color := strings.ToUpper(r.FormValue("color"))
+
+		if color == "" {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, errorNoColor.Error())
+			return
+		}
+
+		result := shades.FindFamily(color)
+		if result == "" {
+			if shades.IsGreyScale(color) {
+				w.WriteHeader(http.StatusInternalServerError)
+				fmt.Fprintf(w, errorNoGrayscale.Error())
+				return
+			}
+
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, errorInValid.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, result)
+	}
+}
+
+func (s *server) handleInvert() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		color := strings.ToUpper(r.FormValue("color"))
+
+		if color == "" {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, errorNoColor.Error())
+			return
+		}
+
+		result := shades.Invert(color)
 
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, result)
