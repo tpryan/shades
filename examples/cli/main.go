@@ -18,17 +18,13 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	shades "github.com/tpryan/shades"
 )
 
 func main() {
-	shade, err := shades.NewFamily("RED")
-	if err != nil {
-		log.Fatalf("could not get color family: %v", err)
-	}
-	color := shade.Random(1)
+	shade := shades.NewFamily(shades.Red)
+	color := shade.Random()
 
 	fmt.Printf("color: %s\n", color)
 }

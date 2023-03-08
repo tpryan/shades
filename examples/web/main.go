@@ -15,6 +15,7 @@
 // Package main is a sample application that show a web app that spits out
 // random color shades.
 
+// main serves up a minimal web page demo
 package main
 
 import (
@@ -34,14 +35,20 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	list := shades.List()
+	list := []shades.Color{
+		shades.Red,
+		shades.Orange,
+		shades.Yellow,
+		shades.Green,
+		shades.Cyan,
+		shades.Blue,
+		shades.Purple,
+		shades.Magenta,
+		shades.All,
+	}
 	fmt.Fprint(w, header)
 	for _, k := range list {
-		shade, err := shades.NewFamily(k)
-		if err != nil {
-			log.Printf("could not get color family: %v", err)
-			continue
-		}
+		shade := shades.NewFamily(k)
 		fmt.Fprintln(w, "\t<div class=\"container\">")
 		fmt.Fprintf(w, "\t<h1>%s</h1>\n", shade.Name)
 		for i := 0; i < count; i++ {
