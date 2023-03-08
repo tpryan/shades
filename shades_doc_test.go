@@ -16,16 +16,12 @@ package shades
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 )
 
 func Example_output() {
 	rand.Seed(1)
-	shade, err := NewFamily("RED")
-	if err != nil {
-		log.Fatalf("could not get color family: %v", err)
-	}
+	shade := NewFamily(Red)
 	color := shade.Random()
 
 	fmt.Println(color)

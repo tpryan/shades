@@ -18,7 +18,6 @@
 package shades
 
 import (
-	"fmt"
 	"math/rand"
 	"regexp"
 	"sort"
@@ -35,20 +34,119 @@ func init() {
 	rand.Seed(seed)
 }
 
-// ErrNotValidFamily indicates that you tried to request a color family that
-// does not exist
-var ErrNotValidFamily = fmt.Errorf("the input color family is not valid")
+// Color is an enum that makes it easy to reference the pre set color values.
+type Color int64
+
+const (
+	// Red 🟥
+	Red Color = iota + 1
+	// Orange 🟧
+	Orange
+	// Yellow 🟨
+	Yellow
+	// Green 🟩
+	Green
+	// Cyan 🔵🟢
+	Cyan
+	// Blue 🟦
+	Blue
+	// Purple 🔵🔴
+	Purple
+	// Magenta 🟪
+	Magenta
+	// All 🌈
+	All
+)
+
+func (c Color) String() string {
+	switch c {
+
+	case Red:
+		return "RED"
+	case Orange:
+		return "ORANGE"
+	case Yellow:
+		return "YELLOW"
+	case Green:
+		return "GREEN"
+	case Cyan:
+		return "CYAN"
+	case Blue:
+		return "BLUE"
+	case Purple:
+		return "PURPLE"
+	case Magenta:
+		return "MAGENTA"
+	case All:
+		return "ALL"
+	}
+	return "unknown"
+}
 
 var list = map[string]Family{
-	"RED":     {"Red", "FF0000", Range{-10, 20}, Range{.2, 1}, Range{.2, 1}},
-	"ORANGE":  {"Orange", "FFA500", Range{21, 50}, Range{.3, 1}, Range{.4, 1}},
-	"YELLOW":  {"Yellow", "FFFF00", Range{51, 60}, Range{.4, 1}, Range{.63, 1}},
-	"GREEN":   {"Green", "00FF00", Range{81, 140}, Range{.4, 1}, Range{.3, .8}},
-	"CYAN":    {"Cyan", "00FFFF", Range{170, 200}, Range{.25, 1}, Range{.3, 1}},
-	"BLUE":    {"Blue", "0000FF", Range{221, 240}, Range{.1, 1}, Range{.2, 1}},
-	"PURPLE":  {"Purple", "800080", Range{241, 280}, Range{.3, 1}, Range{.4, .7}},
-	"MAGENTA": {"Magenta", "FF00FF", Range{281, 320}, Range{.35, 1}, Range{.3, .7}},
-	"ALL":     {"All", "FF00FF", Range{0, 360}, Range{0, 1}, Range{0, 1}},
+	"RED": {
+		Name: "Red",
+		Base: "FF0000",
+		Hue:  Range{-10, 20},
+		Sat:  Range{.2, 1},
+		Lum:  Range{.2, 1},
+	},
+	"ORANGE": {
+		Name: "Orange",
+		Base: "FFA500",
+		Hue:  Range{21, 50},
+		Sat:  Range{.3, 1},
+		Lum:  Range{.4, 1},
+	},
+	"YELLOW": {
+		Name: "Yellow",
+		Base: "FFFF00",
+		Hue:  Range{51, 60},
+		Sat:  Range{.4, 1},
+		Lum:  Range{.63, 1},
+	},
+	"GREEN": {
+		Name: "Green",
+		Base: "00FF00",
+		Hue:  Range{81, 140},
+		Sat:  Range{.4, 1},
+		Lum:  Range{.3, .8},
+	},
+	"CYAN": {
+		Name: "Cyan",
+		Base: "00FFFF",
+		Hue:  Range{170, 200},
+		Sat:  Range{.25, 1},
+		Lum:  Range{.3, 1},
+	},
+	"BLUE": {
+		Name: "Blue",
+		Base: "0000FF",
+		Hue:  Range{221, 240},
+		Sat:  Range{.1, 1},
+		Lum:  Range{.2, 1},
+	},
+	"PURPLE": {
+		Name: "Purple",
+		Base: "800080",
+		Hue:  Range{241, 280},
+		Sat:  Range{.3, 1},
+		Lum:  Range{.4, .7},
+	},
+	"MAGENTA": {
+		Name: "Magenta",
+		Base: "FF00FF",
+		Hue:  Range{281, 320},
+		Sat:  Range{.35, 1},
+		Lum:  Range{.3, .7},
+	},
+	"ALL": {
+		Name: "All",
+		Base: "FF00FF",
+		Hue:  Range{0, 360},
+		Sat:  Range{0, 1},
+		Lum:  Range{0, 1},
+	},
 }
 
 // Range is a upper and lower bound for a pair of integers for use in the
@@ -126,13 +224,8 @@ func List() []string {
 }
 
 // NewFamily returns a new shade family for generating random colors.
-func NewFamily(key string) (Family, error) {
-	var r Family
-	r, ok := list[key]
-	if !ok {
-		return r, ErrNotValidFamily
-	}
-	return r, nil
+func NewFamily(c Color) Family {
+	return list[c.String()]
 }
 
 // FindFamily returns the name of the family for a given color in a range.

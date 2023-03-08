@@ -69,24 +69,116 @@ func TestBetween(t *testing.T) {
 }
 
 func TestNewFamily(t *testing.T) {
-	cases := []struct {
-		in   string
+	tests := map[string]struct {
+		in   Color
 		want Family
-		err  error
 	}{
-		{"BLUE", Family{"Blue", "0000FF", Range{221, 240}, Range{.1, 1}, Range{.2, 1}}, nil},
-		{"BLUEGREEN", Family{}, ErrNotValidFamily},
+		"Red": {
+			in: Red,
+			want: Family{
+				Name: "Red",
+				Base: "FF0000",
+				Hue:  Range{-10, 20},
+				Sat:  Range{.2, 1},
+				Lum:  Range{.2, 1},
+			},
+		},
+
+		"Orange": {
+			in: Orange,
+			want: Family{
+				Name: "Orange",
+				Base: "FFA500",
+				Hue:  Range{21, 50},
+				Sat:  Range{.3, 1},
+				Lum:  Range{.4, 1},
+			},
+		},
+
+		"Yellow": {
+			in: Yellow,
+			want: Family{
+				Name: "Yellow",
+				Base: "FFFF00",
+				Hue:  Range{51, 60},
+				Sat:  Range{.4, 1},
+				Lum:  Range{.63, 1},
+			},
+		},
+
+		"Green": {
+			in: Green,
+			want: Family{
+				Name: "Green",
+				Base: "00FF00",
+				Hue:  Range{81, 140},
+				Sat:  Range{.4, 1},
+				Lum:  Range{.3, .8},
+			},
+		},
+
+		"Cyan": {
+			in: Cyan,
+			want: Family{
+				Name: "Cyan",
+				Base: "00FFFF",
+				Hue:  Range{170, 200},
+				Sat:  Range{.25, 1},
+				Lum:  Range{.3, 1},
+			},
+		},
+
+		"Blue": {
+			in: Blue,
+			want: Family{
+				Name: "Blue",
+				Base: "0000FF",
+				Hue:  Range{221, 240},
+				Sat:  Range{.1, 1},
+				Lum:  Range{.2, 1},
+			},
+		},
+		"Purple": {
+			in: Purple,
+			want: Family{
+				Name: "Purple",
+				Base: "800080",
+				Hue:  Range{241, 280},
+				Sat:  Range{.3, 1},
+				Lum:  Range{.4, .7},
+			},
+		},
+		"Magenta": {
+			in: Magenta,
+			want: Family{
+				Name: "Magenta",
+				Base: "FF00FF",
+				Hue:  Range{281, 320},
+				Sat:  Range{.35, 1},
+				Lum:  Range{.3, .7},
+			},
+		},
+		"All": {
+			in: All,
+			want: Family{
+				Name: "All",
+				Base: "FF00FF",
+				Hue:  Range{0, 360},
+				Sat:  Range{0, 1},
+				Lum:  Range{0, 1},
+			},
+		},
+		"bad value": {
+			in:   0,
+			want: NewFamily(0),
+		},
 	}
 
-	for _, c := range cases {
-		got, err := NewFamily(c.in)
-		if got != c.want {
-			t.Errorf("NewFamily(%s) got %v, want %v", c.in, got, c.want)
-		}
-		if err != c.err {
-			t.Errorf("NewFamily(%s) got err '%v', want err '%v'", c.in, err, c.err)
-		}
-
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := NewFamily(tc.in)
+			assert.Equal(t, tc.want, got)
+		})
 	}
 }
 
