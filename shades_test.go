@@ -17,6 +17,7 @@ package shades
 import (
 	"fmt"
 	"math/rand"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -176,6 +177,7 @@ func TestInvert(t *testing.T) {
 		{"#000000", "#FFFFFF"},
 		{"#DADADA", "#252525"},
 		{"#19547A", "#E6AB85"},
+		{"notacolor", ""},
 	}
 
 	for _, c := range cases {
@@ -216,4 +218,49 @@ func IsGreyScale(hex string) bool {
 	}
 
 	return false
+}
+
+func TestIsNumeric(t *testing.T) {
+	tests := map[string]struct {
+		in   string
+		want bool
+	}{
+		"123": {in: "123", want: true},
+		"97j": {in: "97j", want: false},
+		"1":   {in: "1", want: true},
+		"ads": {in: "ads", want: false},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := isNumeric(tc.in)
+			if !reflect.DeepEqual(tc.want, got) {
+				t.Fatalf("expected: %+v, got: %+v", tc.want, got)
+			}
+		})
+	}
+}
+
+func TestIsHexColor(t *testing.T) {
+	tests := map[string]struct {
+		in   string
+		want bool
+	}{
+		"#123456": {in: "#123456", want: true},
+		"#ccc":    {in: "#ccc", want: true},
+		"1AFFa1":  {in: "#1AFFa1", want: true},
+		"F00":     {in: "#F00", want: true},
+		"123456":  {in: "123456", want: false},
+		"123abce": {in: "#123abce", want: false},
+		"afafah":  {in: "#afafah", want: false},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := isHexColor(tc.in)
+			if !reflect.DeepEqual(tc.want, got) {
+				t.Fatalf("expected: %+v, got: %+v", tc.want, got)
+			}
+		})
+	}
 }
