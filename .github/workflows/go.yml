@@ -49,4 +49,3 @@ jobs:
         with:
           release-type: go
           package-name: release-please-action
-          prerelease: true
