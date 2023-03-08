@@ -45,9 +45,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v2    
-
-      - name: Conventional Changelog Action
-        uses: TriPSs/conventional-changelog-action@v3.18.0
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: go
+          package-name: release-please-action
