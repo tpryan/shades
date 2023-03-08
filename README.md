@@ -1,5 +1,6 @@
 # Shades
 This is a minimal golang package and app for generating random colors.
+[![GoDoc](https://godoc.org/github.com/tpryan/shades?status.svg)](https://godoc.org/github.com/tpryan/shades)
 
 ## Usage
 
