@@ -15,10 +15,8 @@
 package shades
 
 import (
-	"fmt"
 	"math/rand"
 	"reflect"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -290,30 +288,6 @@ func TestList(t *testing.T) {
 	if len(list) != len(l) {
 		t.Errorf("len(List()) got %d, want %d", len(l), len(list))
 	}
-}
-
-func IsGreyScale(hex string) bool {
-	in := strings.ReplaceAll(hex, "#", "")
-
-	digits := strings.Split(in, "")
-
-	if len(digits) == 6 {
-		tmp := []string{}
-		tmp = append(tmp, fmt.Sprintf("%s%s", digits[0], digits[1]))
-		tmp = append(tmp, fmt.Sprintf("%s%s", digits[2], digits[3]))
-		tmp = append(tmp, fmt.Sprintf("%s%s", digits[4], digits[5]))
-
-		digits = tmp
-	}
-
-	if len(digits) == 3 {
-		if digits[0] == digits[1] && digits[0] == digits[2] {
-			return true
-		}
-		return false
-	}
-
-	return false
 }
 
 func TestIsNumeric(t *testing.T) {

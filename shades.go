@@ -18,6 +18,7 @@
 package shades
 
 import (
+	"fmt"
 	"math/rand"
 	"regexp"
 	"sort"
@@ -275,4 +276,34 @@ func isNumeric(s string) bool {
 func isHexColor(s string) bool {
 	re := regexp.MustCompile("^#(?:[0-9a-fA-F]{3}){1,2}$")
 	return re.MatchString(s)
+}
+
+// IsGreyScale will repourt if the colour is greyscale (RGB match)
+func IsGreyScale(hex string) bool {
+	return IsGrayScale(hex)
+}
+
+// IsGrayScale will report if the color is grayscale (RGB match)
+func IsGrayScale(hex string) bool {
+	in := strings.ReplaceAll(hex, "#", "")
+
+	digits := strings.Split(in, "")
+
+	if len(digits) == 6 {
+		tmp := []string{}
+		tmp = append(tmp, fmt.Sprintf("%s%s", digits[0], digits[1]))
+		tmp = append(tmp, fmt.Sprintf("%s%s", digits[2], digits[3]))
+		tmp = append(tmp, fmt.Sprintf("%s%s", digits[4], digits[5]))
+
+		digits = tmp
+	}
+
+	if len(digits) == 3 {
+		if digits[0] == digits[1] && digits[0] == digits[2] {
+			return true
+		}
+		return false
+	}
+
+	return false
 }
