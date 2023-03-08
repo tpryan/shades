@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/tpryan/shades/compare/v1.0.0...v1.0.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* added enum for color family to make querying easier ([af4fb26](https://github.com/tpryan/shades/commit/af4fb26905d859732123b91b483c740a46d85ca4))
+
 ## 1.0.0 (2023-03-08)
 
 
