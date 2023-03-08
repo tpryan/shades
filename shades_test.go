@@ -20,26 +20,30 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRandomInRange(t *testing.T) {
-	cases := []struct {
+	tests := map[string]struct {
 		in   Range
 		seed int64
 		want float64
 	}{
-		{Range{0, 1}, 1, 0.6046602879796196},
-		{Range{0, 100}, 1, 60.466028797961954},
-		{Range{50, 100}, 1, 80.23301439898097},
-		{Range{.2, .8}, 1, 0.5627961727877718},
+		"0,1":    {in: Range{0, 1}, seed: 1, want: 0.6046602879796196},
+		"0,100":  {in: Range{0, 100}, seed: 1, want: 60.466028797961954},
+		"50,100": {in: Range{50, 100}, seed: 1, want: 80.23301439898098},
+		".2,.8":  {in: Range{.2, .8}, seed: 1, want: 0.5627961727877718},
 	}
 
-	for _, c := range cases {
-		rand.Seed(c.seed)
-		got := rando(c.in)
-		if got != c.want {
-			t.Errorf("randomInRange(%v) got %f, want %f", c.in, got, c.want)
-		}
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			rand.Seed(tc.seed)
+			got := rando(tc.in)
+
+			assert.Equal(t, tc.want, got)
+
+		})
 	}
 }
 
@@ -177,7 +181,7 @@ func TestInvert(t *testing.T) {
 		{"#000000", "#FFFFFF"},
 		{"#DADADA", "#252525"},
 		{"#19547A", "#E6AB85"},
-		{"notacolor", ""},
+		{"notacolor", "#53"},
 	}
 
 	for _, c := range cases {
