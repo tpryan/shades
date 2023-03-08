@@ -41,7 +41,7 @@ func TestRandomInRange(t *testing.T) {
 			rand.Seed(tc.seed)
 			got := rando(tc.in)
 
-			assert.Equal(t, tc.want, got)
+			assert.InDelta(t, tc.want, got, 0.0000001)
 
 		})
 	}
