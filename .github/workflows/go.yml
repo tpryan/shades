@@ -43,4 +43,5 @@ jobs:
 
     - name: Conventional Changelog Action
       uses: TriPSs/conventional-changelog-action@v3.18.0
-  
+      with:
+        github-token: ${{ secrets.github_token }}
