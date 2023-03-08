@@ -20,6 +20,7 @@ package shades
 import (
 	"fmt"
 	"math/rand"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -109,7 +110,8 @@ func (f *Family) Random() string {
 }
 
 func rando(r Range) float64 {
-	return (rand.Float64() * (r.Top - r.Bottom)) + r.Bottom
+	answer := (rand.Float64() * (r.Top - r.Bottom)) + r.Bottom
+	return answer
 }
 
 // List returns the whole set of the names of the canonical color families.
@@ -175,4 +177,9 @@ func Invert(hex string) string {
 func isNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
+}
+
+func isHexColor(s string) bool {
+	re := regexp.MustCompile("^#(?:[0-9a-fA-F]{3}){1,2}$")
+	return re.MatchString(s)
 }
