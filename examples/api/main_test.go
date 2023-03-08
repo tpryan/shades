@@ -24,7 +24,6 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/tpryan/shades"
 )
 
 func TestHealthzHandler(t *testing.T) {
@@ -78,9 +77,9 @@ func TestRandomHandler(t *testing.T) {
 		want   string
 		status int
 	}{
-		"all":  {color: "", want: "#5995fa", status: http.StatusOK},
-		"blue": {color: "blue", want: "#7a8afb", status: http.StatusOK},
-		"yuck": {color: "yuck", want: fmt.Sprintf("could not get color family: %s", shades.ErrNotValidFamily), status: http.StatusInternalServerError},
+		"empty": {color: "", want: "could not get color family: ", status: http.StatusInternalServerError},
+		"blue":  {color: "blue", want: "#7a8afb", status: http.StatusOK},
+		"yuck":  {color: "yuck", want: "could not get color family: yuck", status: http.StatusInternalServerError},
 	}
 
 	for name, tc := range tests {

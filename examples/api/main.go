@@ -30,6 +30,17 @@ var (
 	errorNoGrayscale = fmt.Errorf("cannot handle grayscale colors")
 	errorNoColor     = fmt.Errorf("color cannot be blank")
 	errorInValid     = fmt.Errorf("a valid color (#xxxxxx format) must be input to find the family for it")
+
+	colormap = map[string]shades.Color{
+		"red":     shades.Red,
+		"orange":  shades.Orange,
+		"yellow":  shades.Yellow,
+		"green":   shades.Green,
+		"blue":    shades.Blue,
+		"purple ": shades.Purple,
+		"magenta": shades.Magenta,
+		"all":     shades.All,
+	}
 )
 
 func main() {
@@ -90,18 +101,15 @@ func (s *server) handleFamilyList() http.HandlerFunc {
 
 func (s *server) handleRandom() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		color := strings.ToUpper(mux.Vars(r)["color"])
-
-		if color == "" {
-			color = "ALL"
-		}
-
-		shade, err := shades.NewFamily(color)
-		if err != nil {
+		color := strings.ToLower(mux.Vars(r)["color"])
+		c, ok := colormap[color]
+		if !ok {
 			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprintf(w, "could not get color family: %s", err)
+			fmt.Fprintf(w, "could not get color family: %s", color)
 			return
 		}
+
+		shade := shades.NewFamily(c)
 		result := shade.Random()
 
 		w.WriteHeader(http.StatusOK)
