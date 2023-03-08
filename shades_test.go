@@ -310,27 +310,3 @@ func TestIsNumeric(t *testing.T) {
 		})
 	}
 }
-
-func TestIsHexColor(t *testing.T) {
-	tests := map[string]struct {
-		in   string
-		want bool
-	}{
-		"#123456": {in: "#123456", want: true},
-		"#ccc":    {in: "#ccc", want: true},
-		"1AFFa1":  {in: "#1AFFa1", want: true},
-		"F00":     {in: "#F00", want: true},
-		"123456":  {in: "123456", want: false},
-		"123abce": {in: "#123abce", want: false},
-		"afafah":  {in: "#afafah", want: false},
-	}
-
-	for name, tc := range tests {
-		t.Run(name, func(t *testing.T) {
-			got := isHexColor(tc.in)
-			if !reflect.DeepEqual(tc.want, got) {
-				t.Fatalf("expected: %+v, got: %+v", tc.want, got)
-			}
-		})
-	}
-}

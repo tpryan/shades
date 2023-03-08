@@ -20,7 +20,6 @@ package shades
 import (
 	"fmt"
 	"math/rand"
-	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -271,11 +270,6 @@ func Invert(hex string) string {
 func isNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
-}
-
-func isHexColor(s string) bool {
-	re := regexp.MustCompile("^#(?:[0-9a-fA-F]{3}){1,2}$")
-	return re.MatchString(s)
 }
 
 // IsGreyScale will repourt if the colour is greyscale (RGB match)
