@@ -310,3 +310,65 @@ func TestIsNumeric(t *testing.T) {
 		})
 	}
 }
+
+func TestIsGrayScale(t *testing.T) {
+	tests := map[string]struct {
+		in   string
+		want bool
+	}{
+		"silver": {
+			in:   "#C0C0C0",
+			want: true,
+		},
+		"blue": {
+			in:   "#0000FF",
+			want: false,
+		},
+		"almostblack": {
+			in:   "#333",
+			want: true,
+		},
+		"notvalid": {
+			in:   "#643874656",
+			want: false,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := IsGrayScale(tc.in)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}
+
+func TestIsGreyScale(t *testing.T) {
+	tests := map[string]struct {
+		in   string
+		want bool
+	}{
+		"silver": {
+			in:   "#C0C0C0",
+			want: true,
+		},
+		"red": {
+			in:   "#FF0000",
+			want: false,
+		},
+		"almostwhite": {
+			in:   "#eee",
+			want: true,
+		},
+		"notvalid": {
+			in:   "64",
+			want: false,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := IsGreyScale(tc.in)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}
