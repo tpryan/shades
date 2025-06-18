@@ -185,28 +185,8 @@ type Family struct {
 }
 
 // NewFamily returns a new shade family for generating random colors.
-func NewFamily(opts ...Option) Family {
-	f := &Family{}
-
-	if len(opts) <= 0 {
-		opts = append(opts, Only(All))
-	}
-
-	for _, opt := range opts {
-		opt(f)
-	}
-
-	return *f
-}
-
-// Option allows us to configure modifications for family
-type Option func(f *Family)
-
-func Only(c Color) Option {
-	return func(f *Family) {
-		tmp := list[c.String()]
-		f = &tmp
-	}
+func NewFamily(c Color) Family {
+	return list[c.String()]
 }
 
 // In determines if a given hexidecimal color is withing a given color family.

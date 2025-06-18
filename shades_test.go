@@ -166,15 +166,11 @@ func TestNewFamily(t *testing.T) {
 				Lum:  Range{0, 1},
 			},
 		},
-		"bad value": {
-			in:   0,
-			want: NewFamily(Only(0)),
-		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := NewFamily(Only(tc.in))
+			got := NewFamily(tc.in)
 			assert.Equal(t, tc.want, got)
 		})
 	}
