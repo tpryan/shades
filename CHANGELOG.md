@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/tpryan/shades/compare/v1.0.1...v1.0.2) (2025-06-18)
+
+
+### Bug Fixes
+
+* IsGrayScale no longer worked from test ([7c23385](https://github.com/tpryan/shades/commit/7c23385ac0ef0f97d50d831332afe4386dfa1fff))
+* reverting weird addition of options to newfamily ([4f257c1](https://github.com/tpryan/shades/commit/4f257c1309683b3e86b330ce264505736927a457))
+
 ## [1.0.1](https://github.com/tpryan/shades/compare/v1.0.0...v1.0.1) (2023-03-08)
 
 
