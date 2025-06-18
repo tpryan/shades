@@ -184,6 +184,31 @@ type Family struct {
 	Lum  Range
 }
 
+// NewFamily returns a new shade family for generating random colors.
+func NewFamily(opts ...Option) Family {
+	f := &Family{}
+
+	if len(opts) <= 0 {
+		opts = append(opts, Only(All))
+	}
+
+	for _, opt := range opts {
+		opt(f)
+	}
+
+	return *f
+}
+
+// Option allows us to configure modifications for family
+type Option func(f *Family)
+
+func Only(c Color) Option {
+	return func(f *Family) {
+		tmp := list[c.String()]
+		f = &tmp
+	}
+}
+
 // In determines if a given hexidecimal color is withing a given color family.
 // If the given hex string is invalid, this function returns false.
 func (f *Family) In(hex string) bool {
@@ -221,11 +246,6 @@ func List() []string {
 	sort.Strings(r)
 
 	return r
-}
-
-// NewFamily returns a new shade family for generating random colors.
-func NewFamily(c Color) Family {
-	return list[c.String()]
 }
 
 // FindFamily returns the name of the family for a given color in a range.

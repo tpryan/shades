@@ -21,7 +21,7 @@ import (
 
 func Example_output() {
 	rand.Seed(1)
-	shade := NewFamily(Red)
+	shade := NewFamily(Only(Red))
 	color := shade.Random()
 
 	fmt.Println(color)
